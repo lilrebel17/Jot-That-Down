@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='utf-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <title></title>
+        <!-- Links to sheets. -->
+        <link rel='stylesheet' href=''>
+        <link rel='canonical' href=''>
+
+        <!-- Icons -->
+        <!-- For IE 10 and below -->
+        <!-- Place favicon.ico in the root directory - no tag necessary -->
+        <!-- Icon in the highest resolution we need it for -->
+        <link rel='icon' sizes='192x192' href=''>
+        <!-- Apple Touch Icon (reuse 192px icon.png) -->
+        <link rel='apple-touch-icon' href='/path/to/apple-touch-icon.png'>
+        <!-- Safari Pinned Tab Icon -->
+        <link rel='mask-icon' href='/path/to/icon.svg' color='blue'>
+
+        <!-- Force IE 8/9/10 to use its latest rendering engine -->
+        <!-- Internet Explorer -->
+        <meta http-equiv='x-ua-compatible' content='ie=edge'>
+    </head>
+
+    <body>
+        <header>
+            <h1>Jot That Down!</h1>
+        </header>
+            <div class='note-list'>
+                <form class="submit-note">
+                <input type="date" placeholder="Due Date" class="note-due-date">
+                <label for="due-date">Due Date</label>
+                <input type="text" placeholder="Title" class="note-title">
+                <textarea placeholder="Insert Notes" class="note-content"></textarea>
+                <button type="button" for="submit-note" class="submit-note-button">Submit</button>
+                </form>
+            </div>
+        <!-- Link JS, keep at bottom -->
+        <script src='notesubmit.js'></script>
+    </body>
+</html>
