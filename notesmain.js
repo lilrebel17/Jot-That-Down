@@ -56,7 +56,7 @@ submitbutton.addEventListener('click', () => {
         let NewNoteTitle = document.createElement('h1')
         let NewNoteDueDate = document.createElement('p')
         let NewNoteContent = document.createElement('p')
-        let RemoveButton = document.createElement('button')
+        let Form = document.querySelector('.submit-note')
 
         //Adds values of the input boxes to the newley created Elements
         NewNoteContainer.id = NoteID
@@ -69,6 +69,9 @@ submitbutton.addEventListener('click', () => {
         //Appends the container to its div "note-list-container"
         NewNoteContainer.append(NewNoteTitle, NewNoteDueDate,NewNoteContent)
         NoteListContainer.append(NewNoteContainer)
+
+        //Resets the text boxes on button press
+        Form.reset()
 
         //Creates an array, makes it a JSON string. Then stores it in localStorage
         let StorageArray = [NoteID,title.value,dueDate.value,content.value]
