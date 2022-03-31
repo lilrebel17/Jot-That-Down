@@ -1,7 +1,7 @@
 //Variables for the Containers & HTML elements we are manipulating
 let submitbutton = document.querySelector('.submit-note-button')
-let NoteListContainer = document.querySelector('.notes-list-container')
 let editor = document.querySelector('.editor')
+let NoteListContainer = document.querySelector('.notes-list-container')
 
 //Variables for the input boxes
 let content = document.querySelector('.note-content')
@@ -22,7 +22,6 @@ window.onload = () =>{
         let NewNoteTitle = document.createElement('h1')
         let NewNoteDueDate = document.createElement('p')
         let NewNoteContent = document.createElement('p')
-        let RemoveButton = document.createElement('button')
 
         //All notes are stored as JSON String but are originally array.
         //We have to parse the old notes so it converts back into
@@ -76,14 +75,4 @@ submitbutton.addEventListener('click', () => {
         localStorage.setItem('Note' + NoteID, JSON.stringify(StorageArray))
 
         NoteID += 1
-})
-
-NoteListContainer.addEventListener('click', (a) => {
-        if(a.target.parentNode.className == 'notes-list-item') {
-            SelectedArray.push(a.target.parentNode.id)
-        }  
-        else if(a.target.className == 'notes-list-item') {
-            SelectedArray.push(a.target.id)
-        }
-    console.log(SelectedArray)
 })
