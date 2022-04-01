@@ -11,6 +11,7 @@ NoteListContainer.addEventListener('click', (a) => {
             SelectedArray.unshift(a.target.id)
         }
     AddToEditor()
+    console.log("Note List Click")
 })
 
 function CheckForPreviousSelection() {
@@ -32,7 +33,13 @@ function AddToEditor(currentid) {
     let selectedDueDate = Selection.childNodes[1]
     let selectedContent = Selection.childNodes[2].textContent
 
-    EditorDueDate.append(selectedDueDate)
-    EditorTitle.append(selectedTitle)
-    EditorContent.value += selectedContent
-}
+    if(EditorTitle.childNodes.length > 1) {
+        let StorageArray = [SelectedArray[1],Selection.childNodes[0],Selection.childNodes[1],Selection.childNodes[2].textContent]
+        
+    }
+    else {
+        EditorDueDate.append(selectedDueDate)
+        EditorTitle.append(selectedTitle)
+        EditorContent.value = selectedContent
+        Selection.style.display = 'none'
+    }

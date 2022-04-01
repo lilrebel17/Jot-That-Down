@@ -70,12 +70,12 @@ submitbutton.addEventListener('click', () => {
         NewNoteContainer.append(NewNoteTitle, NewNoteDueDate,NewNoteContent)
         NoteListContainer.append(NewNoteContainer)
 
-        //Resets the text boxes on button press
-        Form.reset()
-
         //Creates an array, makes it a JSON string. Then stores it in localStorage
         let StorageArray = [NoteID,title.value,dueDate.value,content.value]
         localStorage.setItem('Note' + NoteID, JSON.stringify(StorageArray))
 
         NoteID += 1
+
+        //Resets the text boxes on button press
+        Form.reset()
 })
