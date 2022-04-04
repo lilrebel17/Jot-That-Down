@@ -30,12 +30,14 @@
         <div class="main-container">
             <ul class="notes-list-container">
             </ul>
-            <div class='editor'>
-                <h1 class="editor-due-date"></h1>
-                <h2 class='editor-note-title'></h2>
-                <textarea class="editor-text-area">
+            <div class='editor-container'>
+                <form class="editor-form">
+                    <input type='date' class="editor-due-date"></input>
+                    <input type="text" class='editor-note-title'></input>
+                    <textarea class="editor-text-area">
 
-                </textarea>
+                    </textarea>
+                </form>
             </div>
             <div class='inputs'>
                     <form class="submit-note">
@@ -48,6 +50,7 @@
                 </div>
         </div>
         <!-- Link JS, keep at bottom -->
-        <script src='notesmain.js' type="module"></script>
+        <script src='main.js' type="module"></script>
+        <script src="editor.js"></script>
     </body>
 </html>
