@@ -8,7 +8,6 @@
 .notes-list-container {
     display: flex;
     flex-direction: column;
-    border: solid 2px black;
     padding: 0;
     width: 50%;
 }
