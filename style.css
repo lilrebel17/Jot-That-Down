@@ -1,39 +1,150 @@
-.main-container {
+@import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Sriracha&display=swap');
+
+:root {
+    --main-clr: #4A6FA5;
+    --bdr-clr: #6485B9;
+    --del-btn-clr: #C14953;
+    --save-btn-clr: #3F6C51;
+    --hdr-fnt: 'Permanent Marker', cursive;
+    --contnt-fnt: 'Sriracha', cursive;
+}
+
+html {
+    margin: 0%;
+    padding: 0%;
+    background-color: var(--main-clr);
+    font-family: var(--contnt-fnt);
+}
+body {
+    margin: 0%;
+    padding: 0%;
+}
+header {
+    text-align: center;
+    font-family: var(--hdr-fnt);
+    border-bottom: 2px solid var(--bdr-clr);
+}
+header h1 {
+    margin-top: 0%;
+    padding-top: 2%;
+}
+.hidden {
+    display: none;
+}
+
+.main-cntnr {
     display: flex;
     flex-direction: row;
 }
 
-.notes-list-container {
-    display: flex;
-    flex-direction: column;
-    border: solid 2px black;
-    padding: 0;
-    width: 50%;
-}
-
-.notes-list-item {
-    list-style-type: none;
-    border: solid 2px black;
-}
 
 .editor {
     width: 80vw;
     height: 80vh;
-    display: none;
-}
-
-.inputs {
-    width: 40%;
-}
-.note-content {
-    height: 20vh;
 }
 .submit-note {
     display: flex;
     flex-direction: column;
 }
+/* Banners/Alert Selectors */
+.del-alrt {
+   background-color: var(--del-btn-clr);
+   position: absolute;
+   width: 100vw;
+   top: 0%;
+   font-size: .75em;
+}
+.del-btn {
+    display: flex;
+    flex-direction: row;
+}
+.del-btn button {
+    background-color: transparent;
+    border-color: rgb(32, 32, 32);
+    width: 100%;
+}
+.save-alrt {
+    background-color: var(--save-btn-clr);
+    position: absolute;
+    width: 100%;
+    top: 0%;
+    font-size: 1em;
+}
 
-.editor-text-area {
+/* Left Side (Note Side) Selectors */
+.lft-sd-cntnr{
+    display: flex;
+    flex-direction: column;
+    width: 75%;
+    text-align: center;
+}
+
+.notes-ul-cntnr {
+    display: flex;
+    flex-direction: column;
     width: 98%;
-    height:95%;
+    height: 85vh;
+    padding: 0%;
+    margin: 0%;
+    overflow-x: auto;
+    border: 2px outset var(--bdr-clr);
+}
+
+.notes-li {
+    list-style-type: none;
+    background-color: white;
+    border: solid 5px var(--bdr-clr);
+    font-size: 1rem;
+    max-height: 80%
+}
+
+.create-btn{
+    background-color: transparent;
+    border-color: var(--bdr-clr);
+    width: 99%;
+    font-family: var(--hdr-fnt);
+    font-size: 1.5rem;
+}
+
+/* Editor Container Selector */
+.edt-cntnr {
+    display: flex; 
+    flex-direction: column;
+}
+/* Top Editor Selectors */
+.tp-edt-cntnr {
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+.tp-edt-input {
+    border-color: var(--bdr-clr);
+    border-style:solid;
+    font-family: var(--contnt-fnt)
+}
+
+/* Middle Editor Selectors */
+.editor-text-area {
+    width: 60vw;
+    height: 70vh;
+    border-color: var(--bdr-clr);
+    font-family: var(--contnt-fnt)
+}
+
+/* Bottom Editor Selectors */
+.btm-edt {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+}
+
+.btm-edt-btn {
+    background-color: transparent;
+    border-color: var(--bdr-clr);
+    font-family: var(--hdr-fnt);
+    font-size:3vw;
+    width: 100%;
+}
+.btm-edt-btn label {
+    margin-top: 0%;
 }
