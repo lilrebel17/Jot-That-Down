@@ -213,7 +213,7 @@ savebutton.addEventListener('click', () => {
                 NoteContent.innerHTML,
             ]
 
-            NoteContainer.className = 'notes-list-item'
+            NoteContainer.className = 'notes-li'
             NoteContent.className = 'hidden'
             NoteContainer.id = NoteListContainer.childElementCount
             NoteContainer.append(NoteTitle,NoteDueDate,NoteContent)
