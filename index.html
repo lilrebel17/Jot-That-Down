@@ -3,7 +3,7 @@
     <head>
         <meta charset='utf-8'>
         <meta name='viewport' content='width=device-width, initial-scale=1'>
-        <title></title>
+        <title>Let me Jot That Down!</title>
         <!-- Links to sheets. -->
         <link rel='stylesheet' href='style.css'>
         <link rel='canonical' href=''>
@@ -25,30 +25,37 @@
 
     <body>
         <header>
+            <div class="del-alrt hidden">
+                <h2>Are you sure you want to delete this note?</h2>
+                <div class="del-btn">
+                    <button type="button" class="del-yes-btn">Yes</button>
+                    <button type="button" class="del-no-btn">No</button>
+                </div>
+            </div>
+            <div class="save-alrt hidden">
+                <h2>Note Saved</h2>
+            </div>
             <h1>Jot That Down!</h1>
         </header>
-        <div class="main-container">
-            <ul class="notes-list-container">
-            </ul>
-            <div class='editor-container'>
-                <form class="editor-form">
-                    <input type='date' class="editor-due-date"></input>
-                    <input type="text" class='editor-note-title'></input>
-                    <textarea class="editor-text-area">
-
-                    </textarea>
-                    <button type="button" for="editor-form" class='editor-save-button'>Save</button>
+        <div class="main-cntnr">
+            <div class="lft-sd-cntnr">
+                <button type="button" class="create-btn">Create</button>
+                <ul class="notes-ul-cntnr">
+                </ul>
+            </div>
+            <div class='edt-cntnr'>
+                <form class="edt-form">
+                    <div class="tp-edt-cntnr">
+                        <input type='date' class="editor-due-date tp-edt-input"></input>
+                        <input type="text" class='editor-note-title tp-edt-input' placeholder="Title"></input>
+                    </div>
+                    <textarea class="editor-text-area" placeholder="Enter Note Here"></textarea>
+                    <div class="btm-edt">
+                    <button type="button" for="edt-form" class='edt-save-btn btm-edt-btn'>Save</button>
+                    <button type="button" for="edt-form" class='edt-del-btn btm-edt-btn'>Delete Note</button>
+                    </div>
                 </form>
             </div>
-            <div class='inputs'>
-                    <form class="submit-note">
-                        <label for="due-date">Due Date</label>
-                    <input type="date" placeholder="Due Date" class="note-due-date">
-                    <input type="text" placeholder="Title" class="note-title">
-                    <textarea placeholder="Insert Notes" class="note-content"></textarea>
-                    <button type="button" for="submit-note" class="submit-note-button">Submit</button>
-                    </form>
-                </div>
         </div>
         <!-- Link JS, keep at bottom -->
         <script src='main.js'></script>

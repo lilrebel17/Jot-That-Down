@@ -1,5 +1,5 @@
 //Elements for the Note list
-let NoteListContainer = document.querySelector('.notes-list-container')
+let NoteListContainer = document.querySelector('.notes-ul-cntnr')
 let Notes = document.querySelector('.notes-list-item')
 
 //Elements for the Editor
@@ -15,95 +15,136 @@ let dueDate = document.querySelector('.note-due-date')
 
 //Button elements
 let submitbutton = document.querySelector('.submit-note-button')
-let savebutton = document.querySelector('.editor-save-button')
+let savebutton = document.querySelector('.edt-save-btn')
+let deletenotebutton = document.querySelector('.edt-del-btn')
+let EditorCreateButton = document.querySelector('.create-btn')
 
+//Elements for Banner Alerts
+let deleteAlert = document.querySelector('.del-alrt')
+
+//Elemets for Banner Alert buttons
+let deleteYesButton = document.querySelector('.del-yes-btn')
+let deleteNoButton = document.querySelector('.del-no-btn')
+
+//Global Variable to keep track of your selection
 let SelectionArray = []
-
-let NoteID = 0
 
 
 //Loads older notes when the window is loaded
-window.onload =  () =>{
-    for(let i=0; i < localStorage.length +1; i++) {
-        let Note = JSON.parse(localStorage.getItem('Note' + i))
-            //Creating local variables for older notes
-            let NoteContainer = document.createElement('li')
-            let NoteTitle = document.createElement('h1')
-            let NoteDueDate = document.createElement('p')
-            let NoteContent = document.createElement('p')
+window.onload =  () => {
+    let StoredNotes = JSON.parse(localStorage.getItem('Notes'))
+    for(i=0;i < StoredNotes.length; i++) {
+    //Creating local variables for older notes
+    let NoteContainer = document.createElement('li')
+    let NoteTitle = document.createElement('h1')
+    let NoteDueDate = document.createElement('p')
+    let NoteContent = document.createElement('p')
 
+    NoteContainer.className = 'notes-li'
+    NoteContainer.id = i
+    NoteTitle.append(StoredNotes[i][0])
+    NoteDueDate.append(StoredNotes[i][1])
+    NoteContent.append(StoredNotes[i][2])
 
-            //Since its an array again, we can just use OldNote
-            //To store those old array items, and append them
-            //To match the note structure.
-            NoteContainer.className = 'notes-list-item' // Creates a class to select all notes
-            NoteTitle.append(Note[1])
-            NoteDueDate.append(Note[2])
-            NoteContent.append(Note[3])
-            NoteContainer.id = Note[0]
-
-            //This appends the newly created elements to the container and then
-            //Appends the container to its div "note-list-container"
-            NoteContainer.append(NoteTitle, NoteDueDate,NoteContent)
-            NoteListContainer.append(NoteContainer)
-
-            //This takes our NoteID, which is a global variable.
-            //Makes it equal to Note[0] which is NoteID in the
-            //Storage array
-            NoteID = Note[0] + 1
-        
-        if(Note[1] == null) {
-            console.log("Note" + i +" Does not have a date")
+    //This appends the newly created elements to the container and then
+    //Appends the container to its div "note-list-container"
+    NoteContainer.append(NoteTitle, NoteDueDate,NoteContent)
+    NoteContent.style.display = 'none'
+    NoteListContainer.append(NoteContainer)
+        if(StoredNotes[i][1] == 'undefined' || StoredNotes[i][1] == 'null') {
+            let Blank = NoteDueDate.innerHTML = ' '
+            StoredNotes[i][1] = ' '
+            localStorage.setItem('Notes', JSON.stringify(StoredNotes))
         }
     }
 }
 
 //****** SAVE FUNCTION ******//
-function SaveNote(id) {
-    let note = document.getElementById(id)
-    console.log(id)
-    if(id == undefined) {
-        let note = document.getElementById(SelectionArray[1])
-        if(SelectionArray[1] == null) {
-            console.log("No older note to save..")
-        }
-        else if(SelectionArray != null) {
-            console.log("Saving Note" + SelectionArray[1] + "... ")
-            let StorageArray = [
-                SelectionArray[1],
-                note.childNodes[0].innerHTML,
-                note.childNodes[1].innerHTML,
-                note.childNodes[2].innerHTML
-            ]
-            localStorage.setItem('Note' + SelectionArray[1], JSON.stringify(StorageArray))
-        }
+function SaveNote(NoteArray) {
+    //Check to make sure our localstorage item exists, creates it if not.
+    if(localStorage.getItem('Notes') == undefined) {
+        let NotesStorageArray = []
+        console.log("Nothing in local storage, creating new array")
+        console.log(' ')
+        NotesStorageArray.push(NoteArray)
+        localStorage.setItem('Notes',JSON.stringify(NotesStorageArray))
     }
-    else {
-        let StorageArray = [
-            id,
-            note.childNodes[0].innerHTML,
-            note.childNodes[1].innerHTML,
-            note.childNodes[2].innerHTML
+    //Pushes a new note to local storage if nothing is selected
+    else if(SelectionArray[0] == undefined) {
+        let Storage = JSON.parse(localStorage.getItem('Notes'))
+        console.log("Creating a new note")
+        console.log(" ")
+        Storage.push(NoteArray)
+        localStorage.setItem('Notes',JSON.stringify(Storage))
+    }
+    //Saves previously selected note, as long as there is one. and we dont send
+    //a new array to SaveNote()
+    else if(document.getElementById(SelectionArray[1]) != null && SelectionArray[0] != SelectionArray[1]) {
+        let Storage = JSON.parse(localStorage.getItem('Notes'))
+        let PreviousSelection = document.getElementById(SelectionArray[1])
+        console.log("Saving Previous Note")
+        console.log(" ")
+        Storage[SelectionArray[1]] = [
+            PreviousSelection.childNodes[0].innerHTML,
+            PreviousSelection.childNodes[1].innerHTML,
+            PreviousSelection.childNodes[2].innerHTML
         ]
-        localStorage.setItem('Note' + id, JSON.stringify(StorageArray))
+        localStorage.setItem('Notes',JSON.stringify(Storage))
     }
+    //Saves currently selected note, as long as there is one
+    else if(SelectionArray[0] != undefined && NoteArray != undefined) {
+        let Storage = JSON.parse(localStorage.getItem('Notes'))
+        let CurrentSelection = document.getElementById(SelectionArray[0])
+        console.log("Current Note Saved")
+        Storage[SelectionArray[0]] = [
+            CurrentSelection.childNodes[0].innerHTML,
+            CurrentSelection.childNodes[1].innerHTML,
+            CurrentSelection.childNodes[2].innerHTML,
+        ]
+        localStorage.setItem('Notes',JSON.stringify(Storage))
+    }
+    let SaveBanner = document.querySelector('.save-alrt')
+    SaveBanner.classList.remove('hidden')
+    setTimeout(() => {
+        SaveBanner.classList.add('hidden')
+    },2000)
 }
+
+function DeleteNote() {
+    //Checks for a current selection, if it has one, its removed from storage
+    //Also updates localstorage after deletion
+    if(SelectionArray[0] != undefined){
+        let Storage = JSON.parse(localStorage.getItem('Notes'))
+        Storage.splice(SelectionArray[0],1)
+        console.log("Note " + SelectionArray[0] + " has been deleted")
+        console.log(' ')
+        localStorage.setItem('Notes',JSON.stringify(Storage))
+        }
+    }
+
 
 //****** EDITOR ******//
 NoteListContainer.addEventListener('click', (a) => {
-        if(a.target.parentNode.className == 'notes-list-item') {
+        if(a.target.parentNode.className == 'notes-li') {
             AddToEditor(a.target.parentNode.id)
-            UpdateList(a.target.parentNode.id)
-            SaveNote()
-        }  
-        else if(a.target.className == 'notes-list-item') {
+            UpdateNoteList(a.target.parentNode.id)
+            console.log("Parent Node ID: " + a.target.parentNode.id)
+            console.log(" ")
+            if(SelectionArray[1] != undefined) {
+                SaveNote()
+            }  
+        } 
+        else if(a.target.className == 'notes-li'){
             AddToEditor(a.target.id)
-            UpdateList(a.target.id)
-            SaveNote()
+            UpdateNoteList(a.target.id)
+            console.log("Node ID: " + a.target.id)
+            console.log(" ")
+            if(SelectionArray[1] != undefined) {
+                SaveNote()
+            }  
         }
 })
 
-//Adds the clicked list item to the editor
 function AddToEditor(currentid) {
     let SelectedNote = document.getElementById(currentid)
 
@@ -118,16 +159,12 @@ function AddToEditor(currentid) {
     UpdateSelectionArray(currentid)
 }
 
-function UpdateList(id) {
-    if(SelectionArray[1] != null) {
-        let InEditor = document.getElementById(id)
-        let NotInEditor = document.getElementById(SelectionArray[1])
-        InEditor.classList.add('in-editor')
-        NotInEditor.classList.remove('in-editor')
-    }
-    else {
-        let InEditor = document.getElementById(id)
-        InEditor.classList.add('in-editor')
+function UpdateNoteList(id) {
+    let InEditor = document.getElementById(id)
+    let NotInEditor = document.getElementById(SelectionArray[1])
+    InEditor.classList.add('hidden')
+    if(NotInEditor != undefined) {
+        NotInEditor.classList.remove('hidden')
     }
 }
 
@@ -141,46 +178,107 @@ function UpdateSelectionArray(currentid) {
 
 //Listens for changes in the editor and updates the note list while its hidden
 EditorTitle.addEventListener('keyup', () => {
-    document.getElementById(SelectionArray[0]).childNodes[0].innerHTML = EditorTitle.value
+    if(SelectionArray[0] != null) {
+        document.getElementById(SelectionArray[0]).childNodes[0].innerHTML = EditorTitle.value
+    }
 })
 EditorDueDate.addEventListener('change', () => {
-    document.getElementById(SelectionArray[0]).childNodes[1].innerHTML = EditorDueDate.value
-
+    if(SelectionArray[0] != null) {
+        document.getElementById(SelectionArray[0]).childNodes[1].innerHTML = EditorDueDate.value
+    }
 })
 EditorContent.addEventListener('keyup', () => {
-    document.getElementById(SelectionArray[0]).childNodes[2].innerHTML = EditorContent.value
-})
-
-
-//****** SUBMIT BUTTON ******//
-submitbutton.addEventListener('click', () => {
-    //Creating local variables for new notes
-    let NewNoteContainer = document.createElement('li')
-    let NewNoteTitle = document.createElement('h1')
-    let NewNoteDueDate = document.createElement('p')
-    let NewNoteContent = document.createElement('p')
-    let Form = document.querySelector('.submit-note')
-
-    //Adds values of the input boxes to the newley created Elements
-    NewNoteContainer.id = NoteID
-    NewNoteContainer.className = 'notes-list-item'
-    NewNoteTitle.innerHTML = title.value
-    NewNoteDueDate.innerHTML = dueDate.value
-    NewNoteContent.innerHTML = content.value
-
-    //This appends the newly created elements to the container and then
-    //Appends the container to its div "note-list-container"
-    NewNoteContainer.append(NewNoteTitle, NewNoteDueDate,NewNoteContent)
-    NoteListContainer.append(NewNoteContainer)
-    SaveNote(NoteID)
-
-    NoteID += 1
-    //Resets the text boxes on button press
-    Form.reset()
+    if(SelectionArray[0] != null) {
+        document.getElementById(SelectionArray[0]).childNodes[2].innerHTML = EditorContent.value
+    }
 })
 
 //****** SAVE BUTTON ******/
 savebutton.addEventListener('click', () => {
-    let id = SelectionArray[0]
-    SaveNote(id)
+    let editor = document.querySelector('.edt-form')
+    if(SelectionArray[0] == undefined) {
+       //No selected note, creates a new note, sends data to Savenote()
+            let NoteContainer = document.createElement('li')
+            let NoteTitle = document.createElement('h1')
+            let NoteDueDate = document.createElement('p')
+            let NoteContent = document.createElement('p')
+
+            NoteTitle.innerHTML = EditorTitle.value
+            NoteDueDate.innerHTML = EditorDueDate.value
+            NoteContent.innerHTML = EditorContent.value
+
+            let NewNoteStorageArray = [
+                NoteTitle.innerHTML,
+                NoteDueDate.innerHTML,
+                NoteContent.innerHTML,
+            ]
+
+            NoteContainer.className = 'notes-list-item'
+            NoteContent.className = 'hidden'
+            NoteContainer.id = NoteListContainer.childElementCount
+            NoteContainer.append(NoteTitle,NoteDueDate,NoteContent)
+            NoteListContainer.append(NoteContainer)
+
+            SaveNote(NewNoteStorageArray)
+            editor.reset()
+    }
+    else { 
+        //Note selected, sends the data to be saved in SaveNote()
+        let CurrentID = SelectionArray[0]
+        let CurrentSelection = document.getElementById(CurrentID)
+        let NoteStorageArray = [
+            CurrentSelection.childNodes[0].innerHTML,
+            CurrentSelection.childNodes[1].innerHTML,
+            CurrentSelection.childNodes[2].innerHTML
+        ]
+        editor.reset()
+        CurrentSelection.classList.remove('hidden')
+        SaveNote(NoteStorageArray)
+        SelectionArray[0] = undefined
+    }
+})
+
+deleteYesButton.addEventListener('click', () => {
+    let CurrentNote = document.getElementById(SelectionArray[0])
+    let editor = document.querySelector('.edt-form')
+
+    deleteAlert.classList.add('hidden')
+    ShiftElementIDs(SelectionArray[0])
+    CurrentNote.remove()
+    editor.reset()
+    DeleteNote()    
+    SelectionArray[0] = undefined
+})
+
+deleteNoButton.addEventListener('click',() => {
+    deleteAlert.classList.add('hidden')
+})
+
+function ShiftElementIDs(oldid) {
+    oldid = parseInt(oldid)
+    if(oldid != NoteListContainer.childElementCount){
+        for(let i=oldid;i < NoteListContainer.childElementCount; i++) {
+            let div = document.getElementById(i)
+            console.log(div.id)
+            div.removeAttribute('id')
+            div.id = i-1
+            
+        }
+    }
+}
+
+
+deletenotebutton.addEventListener('click', () => {
+    if(SelectionArray[0] != null) {
+        deleteAlert.classList.remove('hidden')
+    }
+})
+
+
+EditorCreateButton.addEventListener('click', () => {
+    if(SelectionArray[0] != undefined) {
+        SelectionArray.splice(0,SelectionArray.length)
+        let editor = document.querySelector('.edt-form')
+        editor.reset() 
+    }
 })
