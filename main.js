@@ -125,6 +125,8 @@ function DeleteNote() {
 
 //****** EDITOR ******//
 NoteListContainer.addEventListener('click', (a) => {
+    //If you click on NoteListContainer or its parent,
+    //It is added to the editor & the note list is updated
         if(a.target.parentNode.className == 'notes-li') {
             AddToEditor(a.target.parentNode.id)
             UpdateNoteList(a.target.parentNode.id)
@@ -146,6 +148,8 @@ NoteListContainer.addEventListener('click', (a) => {
 })
 
 function AddToEditor(currentid) {
+    //Takes selected note, gets all its values then updates it to the editor
+    //Also updates the selection array to help with keeping what selection is current
     let SelectedNote = document.getElementById(currentid)
 
     let selectedTitle = SelectedNote.childNodes[0].innerHTML
@@ -160,6 +164,8 @@ function AddToEditor(currentid) {
 }
 
 function UpdateNoteList(id) {
+    //Only happens when you click on a note in the corner(See lines 127-148)
+    //InEditor gets its value from whatever you clicked on in the notes list(See line 132-141)
     let InEditor = document.getElementById(id)
     let NotInEditor = document.getElementById(SelectionArray[1])
     InEditor.classList.add('hidden')

@@ -1,21 +1,32 @@
 @import url('https://fonts.googleapis.com/css2?family=Permanent+Marker&family=Sriracha&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Roboto+Slab&display=swap');
 
 :root {
-    --main-clr: #4A6FA5;
+    --bckgrnd-clr: #4A6FA5;
+    --item-bckgrnd-clr: white;
     --bdr-clr: #6485B9;
     --del-btn-clr: #C14953;
     --save-btn-clr: #3F6C51;
     --hdr-fnt: 'Permanent Marker', cursive;
-    --contnt-fnt: 'Sriracha', cursive;
+    --contnt-fnt: 'Sriracha', cursive; 
+   
+    /* --bckgrnd-clr: white;
+    --bdr-clr: #f0f0f0;
+    --del-btn-clr: #C14953;
+    --save-btn-clr: #3F6C51;
+    --hdr-fnt: 'Roboto Slab', serif;
+    --txt-clr: black;
+    --contnt-fnt: 'Montserrat', sans-serif; */
 }
 
 html {
     margin: 0%;
     padding: 0%;
-    background-color: var(--main-clr);
+    background-color: var(--bckgrnd-clr);
     font-family: var(--contnt-fnt);
 }
 body {
+    color: var(--txt-clr);
     margin: 0%;
     padding: 0%;
 }
@@ -92,9 +103,10 @@ header h1 {
 
 .notes-li {
     list-style-type: none;
-    background-color: white;
+    background-color: var(--item-bckgrnd-clr);
     border: solid 5px var(--bdr-clr);
     font-size: 1rem;
+    margin: 1%;
     max-height: 80%
 }
 
@@ -128,7 +140,9 @@ header h1 {
     width: 60vw;
     height: 70vh;
     border-color: var(--bdr-clr);
-    font-family: var(--contnt-fnt)
+    background-color: var(--item-bckgrnd-clr);
+    color: var(--txt-clr);
+    font-family: var(--contnt-fnt);
 }
 
 /* Bottom Editor Selectors */
